@@ -99,9 +99,14 @@ describe GildedRose do
         expect(items[0].quality).to eq quality + 2
       end
 
-      it 'sell_in が 5 日以下のときは quality が 3 上がる' do
+      it 'sell_in が 1 〜 5 日以下のときは quality が 3 上がる' do
         quality = 10
         items = [Item.new('Backstage passes to a TAFKAL80ETC concert', 5, quality)]
+        GildedRose.new(items).update_quality
+        expect(items[0].quality).to eq quality + 3
+
+        quality = 10
+        items = [Item.new('Backstage passes to a TAFKAL80ETC concert', 1, quality)]
         GildedRose.new(items).update_quality
         expect(items[0].quality).to eq quality + 3
       end
