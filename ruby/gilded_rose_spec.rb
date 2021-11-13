@@ -126,12 +126,31 @@ describe GildedRose do
       end
     end
 
-    xcontext 'name が "Conjured" のとき' do
+    context 'name が "Conjured Mana Cake" のとき' do
       it 'quality が 2 下がる' do
         quality = 10
-        items = [Item.new('Conjured', 10, quality)]
+        items = [Item.new('Conjured Mana Cake', 10, quality)]
         GildedRose.new(items).update_quality
         expect(items[0].quality).to eq quality - 2
+      end
+
+      it 'sell_in が 0 以下のとき quality は 4 小さくなる' do
+        quality = 10
+        items = [Item.new('Conjured Mana Cake', 0, quality)]
+        GildedRose.new(items).update_quality
+        expect(items[0].quality).to eq quality - 4
+
+        quality = 10
+        items = [Item.new('Conjured Mana Cake', -1, quality)]
+        GildedRose.new(items).update_quality
+        expect(items[0].quality).to eq quality - 4
+      end
+
+      it 'quality はマイナスにはならない' do
+        min_quality = 0
+        items = [Item.new('Conjured Mana Cake', 0, min_quality)]
+        GildedRose.new(items).update_quality
+        expect(items[0].quality).to eq min_quality
       end
     end
   end

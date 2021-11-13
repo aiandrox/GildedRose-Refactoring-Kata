@@ -42,6 +42,8 @@ class GildedRose
       else
         1
       end
+    when 'Conjured Mana Cake'
+      sell_in < 1 ? -4 : -2
     else
       sell_in < 1 ? -2 : -1
     end
