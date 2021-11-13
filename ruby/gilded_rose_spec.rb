@@ -25,9 +25,14 @@ describe GildedRose do
       expect(items[0].quality).to eq quality - 1
     end
 
-    it 'sell_in が 0 になると quality は 2 小さくなる' do
+    it 'sell_in が 0 以下のとき quality は 2 小さくなる' do
       quality = 10
       items = [Item.new('foo', 0, quality)]
+      GildedRose.new(items).update_quality
+      expect(items[0].quality).to eq quality - 2
+
+      quality = 10
+      items = [Item.new('foo', -1, quality)]
       GildedRose.new(items).update_quality
       expect(items[0].quality).to eq quality - 2
     end
@@ -96,7 +101,7 @@ describe GildedRose do
         expect(items[0].quality).to eq quality + 3
       end
 
-      it 'sell_in が 0 になったら quality が 0 になる' do
+      it 'sell_in が 0 以下のとき quality が 0 になる' do
         quality = 10
         items = [Item.new('Backstage passes to a TAFKAL80ETC concert', 0, quality)]
         GildedRose.new(items).update_quality
