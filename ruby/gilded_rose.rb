@@ -8,29 +8,37 @@ class GildedRose
   # 1日経過時に実行する
   def update_quality
     @items.each do |item|
-      update_each_quality(item)
+      ItemModify.new(item).update_quality
     end
+  end
+end
+
+class ItemModify
+  attr_accessor :item
+
+  def initialize(item)
+    @item = item
+  end
+
+  def update_quality
+    return if item.name == 'Sulfuras, Hand of Ragnaros'
+
+    item.quality = item.quality + addition_quality if within_quality_limit?
+
+    decline_sell_in
   end
 
   private
 
-  def update_each_quality(item)
-    return if item.name == 'Sulfuras, Hand of Ragnaros'
-
-    item.quality = item.quality + addition_quality(item) if within_quality_limit?(item)
-
-    decline_sell_in(item)
-  end
-
-  def within_quality_limit?(item)
+  def within_quality_limit?
     item.quality.positive? && item.quality < 50
   end
 
-  def decline_sell_in(item)
+  def decline_sell_in
     item.sell_in -= 1
   end
 
-  def addition_quality(item)
+  def addition_quality
     sell_in = item.sell_in
 
     case item.name
