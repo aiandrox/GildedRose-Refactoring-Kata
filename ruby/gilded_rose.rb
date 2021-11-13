@@ -16,9 +16,8 @@ class GildedRose
 
   def update_each_quality(item)
     return if item.name == 'Sulfuras, Hand of Ragnaros'
-    return decline_sell_in(item) if item.quality >= 50 || item.quality.zero?
 
-    item.quality = item.quality + addition_quality(item)
+    item.quality = item.quality + addition_quality(item) if item.quality.positive? && item.quality < 50
 
     decline_sell_in(item)
   end
