@@ -5,6 +5,7 @@ class GildedRose
     @items = items
   end
 
+  # 1日経過時に実行する
   def update_quality
     @items.each do |item|
       if (item.name != 'Aged Brie') && (item.name != 'Backstage passes to a TAFKAL80ETC concert')
