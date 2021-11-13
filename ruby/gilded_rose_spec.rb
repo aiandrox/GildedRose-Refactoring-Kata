@@ -16,6 +16,11 @@ describe GildedRose do
       items = [Item.new('foo', sell_in, 10)]
       GildedRose.new(items).update_quality
       expect(items[0].sell_in).to eq sell_in - 1
+
+      sell_in = 10
+      items = [Item.new('foo', sell_in, 60)]
+      GildedRose.new(items).update_quality
+      expect(items[0].sell_in).to eq sell_in - 1
     end
 
     it 'quality が 1 下がる' do

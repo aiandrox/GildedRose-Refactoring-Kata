@@ -16,7 +16,7 @@ class GildedRose
 
   def update_each_quality(item)
     return if item.name == 'Sulfuras, Hand of Ragnaros'
-    return if item.quality >= 50
+    return item.sell_in = item.sell_in - 1 if item.quality >= 50
 
     if (item.name == 'Aged Brie') || (item.name == 'Backstage passes to a TAFKAL80ETC concert')
       item.quality = item.quality + 1
