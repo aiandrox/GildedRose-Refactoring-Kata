@@ -16,7 +16,7 @@ class GildedRose
 
   def update_each_quality(item)
     return if item.name == 'Sulfuras, Hand of Ragnaros'
-    return decline_sell_in(item) if item.quality >= 50
+    return decline_sell_in(item) if item.quality >= 50 || item.quality.zero?
 
     if (item.name == 'Aged Brie') || (item.name == 'Backstage passes to a TAFKAL80ETC concert')
       item.quality = item.quality + 1
@@ -25,7 +25,7 @@ class GildedRose
         item.quality = item.quality + 1 if item.sell_in < 6
       end
     else
-      item.quality = item.quality - 1 if item.quality.positive?
+      item.quality = item.quality - 1
     end
 
     decline_sell_in(item)
@@ -34,9 +34,9 @@ class GildedRose
       return if item.name == 'Aged Brie'
 
       if item.name == 'Backstage passes to a TAFKAL80ETC concert'
-        item.quality = item.quality - item.quality
+        item.quality = 0
       else
-        item.quality = item.quality - 1 if item.quality.positive?
+        item.quality = item.quality - 1
       end
     end
   end
