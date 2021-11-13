@@ -15,6 +15,8 @@ class GildedRose
   private
 
   def update_each_quality(item)
+    return if item.name == 'Sulfuras, Hand of Ragnaros'
+
     if (item.name != 'Aged Brie') && (item.name != 'Backstage passes to a TAFKAL80ETC concert')
       item.quality = item.quality - 1 if item.quality.positive? && (item.name != 'Sulfuras, Hand of Ragnaros')
     elsif item.quality < 50
@@ -24,11 +26,11 @@ class GildedRose
         item.quality = item.quality + 1 if item.sell_in < 6 && (item.quality < 50)
       end
     end
-    item.sell_in = item.sell_in - 1 if item.name != 'Sulfuras, Hand of Ragnaros'
+    item.sell_in = item.sell_in - 1
     if item.sell_in.negative?
       if item.name != 'Aged Brie'
         if item.name != 'Backstage passes to a TAFKAL80ETC concert'
-          item.quality = item.quality - 1 if item.quality.positive? && (item.name != 'Sulfuras, Hand of Ragnaros')
+          item.quality = item.quality - 1 if item.quality.positive?
         else
           item.quality = item.quality - item.quality
         end
