@@ -18,24 +18,34 @@ class GildedRose
     return if item.name == 'Sulfuras, Hand of Ragnaros'
     return decline_sell_in(item) if item.quality >= 50 || item.quality.zero?
 
-    case item.name
-    when 'Aged Brie'
-      item.quality += 1
-    when 'Backstage passes to a TAFKAL80ETC concert'
-      item.quality += 1
-      item.quality += 1 if item.sell_in < 11
-      item.quality += 1 if item.sell_in < 6
-      item.quality = 0 if item.sell_in < 1
-    else
-      item.quality -= 1
-      item.quality -= 1 if item.sell_in < 1
-    end
+    item.quality = item.quality + addition_quality(item)
 
     decline_sell_in(item)
   end
 
   def decline_sell_in(item)
     item.sell_in -= 1
+  end
+
+  def addition_quality(item)
+    sell_in = item.sell_in
+
+    case item.name
+    when 'Aged Brie'
+      1
+    when 'Backstage passes to a TAFKAL80ETC concert'
+      if sell_in < 1
+        - item.quality
+      elsif sell_in < 6
+        3
+      elsif sell_in < 11
+        2
+      else
+        1
+      end
+    else
+      sell_in < 1 ? -2 : -1
+    end
   end
 end
 
